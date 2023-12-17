@@ -1,6 +1,7 @@
 package com.example.demo.club;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +27,14 @@ public class ClubController {
         return clubService.getClub(clubId);
     }
 
+    @PostMapping(path="{clubId}")
+    public void AddNewClub(@RequestBody Club club,
+                            @PathVariable("clubId") Long clubId){
+        clubService.AddClubWithId(clubId,club);
+    }
+
     @PostMapping
-    public void AddNewClub(@RequestBody Club club){
+    public void AddClub(@RequestBody Club club){
         clubService.AddClub(club);
     }
 
@@ -40,6 +47,13 @@ public class ClubController {
         clubService.UpdateClub(clubId,name,city,year);
     }
 
+    @PutMapping
+    public void UpdateClubs(
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) Long year){
+                clubService.UpdateClubs(city,year);
+    }
+
     @DeleteMapping(path="{clubId}")
     public void DeleteClub(@PathVariable("clubId") Long clubId){
         clubService.deleteClub(clubId);
@@ -48,5 +62,10 @@ public class ClubController {
     @DeleteMapping
     public void DeleteClubs(){
         clubService.deleteClubs();
+    }
+
+    @RequestMapping(path="query")
+    public Page<Club> query(){
+        return clubService.query();
     }
 }

@@ -12,4 +12,7 @@ public interface ClubSave  extends JpaRepository<Club,Long> {
 
     @Query("SELECT c FROM Club c WHERE c.name=?1")
     Optional<Club> findClubByName(String name);
+
+    @Query(value = "SELECT MAX(id) FROM club", nativeQuery = true)
+    Long getTopId();
 }

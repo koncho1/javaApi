@@ -1,26 +1,33 @@
 package com.example.demo.club;
 
 
+import com.example.demo.stadium.Stadium;
 import jakarta.persistence.*;
+import org.joda.time.DateTime;
 import org.springframework.lang.Nullable;
 
-@Entity
-@Table
-public class Club {
-@Id
-@SequenceGenerator(
-        name="club_sequence",sequenceName = "club_sequence",allocationSize = 1
-)
+import java.time.ZonedDateTime;
 
-@GeneratedValue(
-        strategy = GenerationType.SEQUENCE,
-        generator="club_sequence"
-)
+@Entity
+@Table(name="club")
+public class Club {
+    @Id
+    @Column(name="id")
     private Long id;
     private String name;
     private String city;
 
     private Long year;
+
+    private ZonedDateTime modificationDate;
+
+    public ZonedDateTime getModificationDate() {
+        return modificationDate;
+    }
+
+    public void setModificationDate(ZonedDateTime modificationDate) {
+        this.modificationDate = modificationDate;
+    }
 
     public Long getYear() {
         return year;
